@@ -13,9 +13,6 @@
     "body-parser": "*",
     "amdefine": "*"
   },
-  "devDependencies": {
-    "chai": "*"
-  },
   "license": "ISC",
   "homepage": "https://github.com/erikpukinskis/nrtv-server"
 }

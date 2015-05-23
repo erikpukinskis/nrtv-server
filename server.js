@@ -1,7 +1,6 @@
 if (typeof define !== 'function') { var define = require('amdefine')(module) }
 
-define(['http', 'body-parser', 'chai'], function(http, bodyParser, chai) {
-  var expect = chai.expect
+define(['http', 'body-parser'], function(http, bodyParser) {
   var express = require("express")
 
   Server = function() {
