@@ -30,3 +30,14 @@ library.test(
 
   }
 )
+
+
+library.test(
+  "getting a collective instance",
+  ["./server"],
+  function(expect, done, Server) {
+    var instance = Server.collective()
+    expect(instance.start).to.be.a("function")
+    done()
+  }
+)
