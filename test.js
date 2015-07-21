@@ -21,7 +21,6 @@ library.test(
     )
     .get("/")
     .end(function(x, response) {
-      console.log(response.text)
       expect(response.text).to.match(
         /hiya/
       )
