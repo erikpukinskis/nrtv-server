@@ -11,7 +11,14 @@
     "http": "*",
     "express": "*",
     "body-parser": "*",
-    "amdefine": "*"
+    "nrtv-library": "*"
+  },
+  "scripts": {
+    "test": "node test.js"
+  },
+  "devDependencies": {
+    "nrtv-test": "*",
+    "supertest": "*"
   },
   "license": "ISC",
   "homepage": "https://github.com/erikpukinskis/nrtv-server"

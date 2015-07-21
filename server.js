@@ -13,6 +13,7 @@ this.app.use(bodyParser.json())
   }
 
   Server.prototype.start = function(port) { 
+    // callback?
 this.sockets = sockets = []
 this.port = port
 
@@ -30,6 +31,7 @@ this.server.on('connection', function(socket) {
   }
 
   Server.prototype.stop = function (callback) {
+    // callback?
 var port = this.port
 this.server.close(function () {
   console.log('Server closed!', port, 'should be free.')
