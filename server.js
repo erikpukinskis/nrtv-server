@@ -24,6 +24,9 @@ module.exports = library.export(
     }
 
     Server.prototype.start = function(port) { 
+      if (this.port) {
+        throw new Error("You already started this server.")
+      }
       this.sockets = sockets = []
       this.port = port
 
