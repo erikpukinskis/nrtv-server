@@ -16,8 +16,6 @@ module.exports = library.export(
       return collective.instance
     }
 
-    var instance = collective.instance
-
     function Server() {
       var _this = this
 
@@ -71,9 +69,18 @@ module.exports = library.export(
         this.app.get.apply(this.app, arguments)
       }
 
+    Server.get = function() {
+      instance().get.apply(instance(), arguments)
+    }
+
     Server.prototype.post =
       function() {
         this.app.post.apply(this.app, arguments)
+      }
+
+    Server.post =
+      function() {
+        instance().post.apply(instance(), arguments)
       }
 
 

@@ -34,9 +34,29 @@ library.test(
 
 library.test(
   "getting a collective instance",
-  ["./server"],
-  function(expect, done, Server) {
-    expect(Server.start).to.be.a("function")
-    done()
+  ["./server", "supertest"],
+  function(expect, done, Server, request) {
+
+    Server.get(
+      "/",
+      function(x, response) {
+        response.send("pants")
+      }
+    )
+
+    Server.start(4000)
+
+    request(
+      "http://localhost:4000"
+    )
+    .get("/")
+    .end(function(x, response) {
+      expect(response.text).to.match(
+        /pants/
+      )
+      Server.stop()
+      done()
+    })
+
   }
 )
