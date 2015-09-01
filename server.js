@@ -3,9 +3,20 @@ var library = require("nrtv-library")(require)
 module.exports = library.export(
   "nrtv-server",
   ["http", "body-parser", library.collective({})],
+
   function(http, bodyParser, collective) {
 
     var express = require("express")
+
+    function instance() {
+      if (!collective.instance) {
+        collective.instance = new Server()
+      }
+
+      return collective.instance
+    }
+
+    var instance = collective.instance
 
     function Server() {
       var _this = this
@@ -13,14 +24,6 @@ module.exports = library.export(
       this.app = express()
 
       this.app.use(bodyParser.json())
-    }
-
-    Server.collective = function() {
-      if (!collective.instance) {
-        collective.instance = new Server()
-      }
-
-      return collective.instance
     }
 
     Server.prototype.start = function(port) { 
@@ -43,6 +46,10 @@ module.exports = library.export(
       })
     }
 
+    Server.start = function(port) {
+      instance().start(port)
+    }
+
     Server.prototype.stop =
       function (callback) {
         var port = this.port
@@ -55,6 +62,10 @@ module.exports = library.export(
         })
       }
 
+    Server.stop = function(callback) {
+      instance().stop(callback)
+    }
+
     Server.prototype.get =
       function() {
         this.app.get.apply(this.app, arguments)
@@ -64,6 +75,7 @@ module.exports = library.export(
       function() {
         this.app.post.apply(this.app, arguments)
       }
+
 
     Server.prototype.static = express.static;
 
