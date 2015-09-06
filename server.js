@@ -50,7 +50,7 @@ module.exports = library.export(
 
     Server.prototype.overrideStart =
       function(start) {
-        this.start = start        
+        this.start = start
       }
 
     Server.overrideStart = function(start) {
