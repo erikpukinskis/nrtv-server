@@ -25,9 +25,7 @@ module.exports = library.export(
     }
 
     Server.prototype.start = function(port) { 
-      if (this.port) {
-        throw new Error("You already started this server.")
-      }
+      this.ensureStopped()
       this.sockets = sockets = []
       this.port = port
 
@@ -48,8 +46,19 @@ module.exports = library.export(
       instance().start(port)
     }
 
+    Server.prototype.ensureStopped =
+      function(message)  {
+        if (this.port) {
+          throw new Error("You already started this server. "+(message ? message : ""))
+        }
+      }
+
     Server.prototype.overrideStart =
       function(start) {
+        this.ensureStopped("You have to override the start function before you start it.")
+        if (this.port) {
+
+        }
         this.start = start
       }
 
