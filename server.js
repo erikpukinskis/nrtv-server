@@ -24,6 +24,16 @@ module.exports = library.export(
       this.app.use(bodyParser.json())
     }
 
+    Server.prototype.express =
+      function() {
+        return this.app
+      }
+
+    Server.express =
+      function() {
+        return instance().express()
+      }
+
     Server.prototype.start = function(port) { 
       this.ensureStopped()
       this.sockets = sockets = []
