@@ -60,3 +60,27 @@ library.test(
 
   }
 )
+
+
+library.test(
+  "you can provide your own server startup function",
+
+  ["./server", "sinon"],
+  function(expect, done, Server, sinon) {
+
+    var server = new Server()
+    var called = false
+
+    server.overrideStart(function(start) {
+      this.start = start
+      called = true
+    })
+
+    server.start()
+    expect(called).to.be.true
+
+    expect(server.start).not.to.have.been.called
+
+    done()
+  }
+)

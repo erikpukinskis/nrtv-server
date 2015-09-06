@@ -48,6 +48,15 @@ module.exports = library.export(
       instance().start(port)
     }
 
+    Server.prototype.overrideStart =
+      function(start) {
+        this.start = start        
+      }
+
+    Server.overrideStart = function(start) {
+      instance().overrideStart(start)
+    }
+
     Server.prototype.stop =
       function (callback) {
         var port = this.port

@@ -18,7 +18,8 @@
   },
   "devDependencies": {
     "nrtv-test": "*",
-    "supertest": "*"
+    "supertest": "*",
+    "sinon": "*"
   },
   "license": "ISC",
   "homepage": "https://github.com/erikpukinskis/nrtv-server"
