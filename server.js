@@ -74,8 +74,8 @@ module.exports = library.export(
         this.stop = stop
       }
 
-    Server.overrideStart = function(start) {
-      instance().overrideStart(start)
+    Server.relenquishControl = function(start) {
+      instance().relenquishControl(start)
     }
 
     Server.prototype.stop =
