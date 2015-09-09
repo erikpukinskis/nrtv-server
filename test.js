@@ -65,36 +65,22 @@ library.test(
 library.test(
   "you can provide your own server startup function",
 
-  ["./server", "sinon"],
-  function(expect, done, Server, sinon) {
+  ["./server", "http"],
+  function(expect, done, Server, http) {
 
     var server = new Server()
     var started = false
-    var stopped = false
-
-    var originalStart = server.start
-    var originalStop = server.stop
-
-    sinon.spy(server, 'start')
-    sinon.spy(server, 'stop')
 
     server.relenquishControl(
       function start(start) {
         started = true
-      },
-
-      function stop() {
-        stopped = true
+        return http.createServer()
       }
     )
 
     server.start()
     expect(started).to.be.true
-    expect(originalStart).not.to.have.been.called
-
     server.stop()
-    expect(stopped).to.be.true
-    expect(originalStop).not.to.have.been.called
 
     done()
   }

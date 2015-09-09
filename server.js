@@ -39,8 +39,16 @@ module.exports = library.export(
       this.sockets = sockets = []
       this.port = port
 
-      this.server = http.createServer(this.app)
-      this.server.listen(port)
+      if (this.startOverride) {
+        this.server = this.startOverride(port)
+        if (!this.server) {
+          throw new Error("The start function you gave us needs to return an http server so we can monitor the sockets and stuff! The function you gave us looks like this:\n"+this.startOverride.toString()+"\n")
+        }
+      } else {
+        this.server = http.createServer(this.app)
+        this.server.listen(port)
+      }
+
       console.log('listening on', port)
 
       this.server.on('connection', function(socket) {
@@ -64,14 +72,10 @@ module.exports = library.export(
       }
 
     Server.prototype.relenquishControl =
-      function(start, stop) {
+      function(start) {
         this.ensureStopped("You have to override the start function before you start it.")
 
-        if (!this.start || !this.stop) {
-          throw new Error("If you want to relenquish control, you need to provide stop and start functions. Gas and brakes.")
-        }
-        this.start = start
-        this.stop = stop
+        this.startOverride = start
       }
 
     Server.relenquishControl = function(start) {
@@ -81,10 +85,14 @@ module.exports = library.export(
     Server.prototype.stop =
       function (callback) {
         var port = this.port
-        this.server.close(function () {
-          console.log('Server closed!', port, 'should be free.')
-          if (callback) { callback() }
-        })
+
+        if (!this.startOverride) {
+          this.server.close(function () {
+            console.log('Server closed!', port, 'should be free.')
+            if (callback) { callback() }
+          })
+        }
+
         this.sockets.forEach(function(socket) {
           socket.destroy()
         })
