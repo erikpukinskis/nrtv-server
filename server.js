@@ -47,9 +47,8 @@ module.exports = library.export(
       } else {
         this.server = http.createServer(this.app)
         this.server.listen(port)
+        console.log('listening on', port)
       }
-
-      console.log('listening on', port)
 
       this.server.on('connection', function(socket) {
         sockets.push(socket)
