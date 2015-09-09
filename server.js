@@ -63,13 +63,15 @@ module.exports = library.export(
         }
       }
 
-    Server.prototype.overrideStart =
-      function(start) {
+    Server.prototype.relenquishControl =
+      function(start, stop) {
         this.ensureStopped("You have to override the start function before you start it.")
-        if (this.port) {
 
+        if (!this.start || !this.stop) {
+          throw new Error("If you want to relenquish control, you need to provide stop and start functions. Gas and brakes.")
         }
         this.start = start
+        this.stop = stop
       }
 
     Server.overrideStart = function(start) {

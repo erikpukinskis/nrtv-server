@@ -69,17 +69,32 @@ library.test(
   function(expect, done, Server, sinon) {
 
     var server = new Server()
-    var called = false
+    var started = false
+    var stopped = false
 
-    server.overrideStart(function(start) {
-      this.start = start
-      called = true
-    })
+    var originalStart = server.start
+    var originalStop = server.stop
+
+    sinon.spy(server, 'start')
+    sinon.spy(server, 'stop')
+
+    server.relenquishControl(
+      function start(start) {
+        started = true
+      },
+
+      function stop() {
+        stopped = true
+      }
+    )
 
     server.start()
-    expect(called).to.be.true
+    expect(started).to.be.true
+    expect(originalStart).not.to.have.been.called
 
-    expect(server.start).not.to.have.been.called
+    server.stop()
+    expect(stopped).to.be.true
+    expect(originalStop).not.to.have.been.called
 
     done()
   }
