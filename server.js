@@ -85,12 +85,10 @@ module.exports = library.export(
       function (callback) {
         var port = this.port
 
-        if (!this.startOverride) {
-          this.server.close(function () {
-            console.log('Server closed!', port, 'should be free.')
-            if (callback) { callback() }
-          })
-        }
+        this.server.close(function () {
+          console.log('Server closed!', port, 'should be free.')
+          if (callback) { callback() }
+        })
 
         this.sockets.forEach(function(socket) {
           socket.destroy()
