@@ -100,8 +100,11 @@ module.exports = library.export(
     }
 
     Server.prototype.get =
-      function() {
-        this.app.get.apply(this.app, arguments)
+      function(pattern, handler) {
+        this.app.get(
+          pattern,
+          wrap.bind(null, handler)
+        )
       }
 
     Server.get = function() {
@@ -109,8 +112,11 @@ module.exports = library.export(
     }
 
     Server.prototype.post =
-      function() {
-        this.app.post.apply(this.app, arguments)
+      function(pattern, handler) {
+        this.app.post(
+          pattern,
+          wrap.bind(null, handler)
+        )
       }
 
     Server.post =
@@ -118,6 +124,17 @@ module.exports = library.export(
         instance().post.apply(instance(), arguments)
       }
 
+    function wrap(handler, request, response) {
+      try {
+        handler(request, response)
+      } catch (e) {
+        var lines = e.stack.split("\n")
+
+        console.log("\n ⚡⚡⚡ REQUEST ERROR ⚡⚡⚡\n\n"+lines[0])
+
+        console.log(lines.slice(1).join("\n"))
+      }
+    }
 
     Server.prototype.static = express.static;
 
