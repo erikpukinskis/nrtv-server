@@ -1,6 +1,6 @@
 {
   "name": "nrtv-server",
-  "version": "0.16.0",
+  "version": "0.17.0",
   "description": "Send stuff over HTTP",
   "main": "server.js",
   "repository": {
