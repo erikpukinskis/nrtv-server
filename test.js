@@ -1,6 +1,6 @@
-var library = require("nrtv-library")(require)
+var test = require("nrtv-test")(require)
 
-library.test(
+test.using(
   "sending text",
   ["./server", "supertest"],
   function(expect, done, Server, request) {
@@ -32,7 +32,7 @@ library.test(
 )
 
 
-library.test(
+test.using(
   "getting a collective instance",
   ["./server", "supertest"],
   function(expect, done, Server, request) {
@@ -62,7 +62,7 @@ library.test(
 )
 
 
-library.test(
+test.using(
   "you can provide your own server startup function",
 
   ["./server", "http"],

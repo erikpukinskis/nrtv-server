@@ -29,15 +29,10 @@ module.exports = library.export(
         return this.app
       }
 
-    Server.express =
-      function() {
-        return instance().express()
-      }
-
     Server.prototype.start = function(port) { 
       this.ensureStopped()
       this.sockets = sockets = []
-      this.port = port
+      this.port = port || 5678
 
       if (this.startOverride) {
         this.server = this.startOverride(port)
@@ -59,10 +54,6 @@ module.exports = library.export(
       })
     }
 
-    Server.start = function(port) {
-      instance().start(port)
-    }
-
     Server.prototype.ensureStopped =
       function(message)  {
         if (this.port) {
@@ -76,10 +67,6 @@ module.exports = library.export(
 
         this.startOverride = start
       }
-
-    Server.relenquishControl = function(start) {
-      instance().relenquishControl(start)
-    }
 
     Server.prototype.stop =
       function (callback) {
@@ -95,10 +82,6 @@ module.exports = library.export(
         })
       }
 
-    Server.stop = function(callback) {
-      instance().stop(callback)
-    }
-
     Server.prototype.get =
       function(pattern, handler) {
         this.app.get(
@@ -107,21 +90,12 @@ module.exports = library.export(
         )
       }
 
-    Server.get = function() {
-      instance().get.apply(instance(), arguments)
-    }
-
     Server.prototype.post =
       function(pattern, handler) {
         this.app.post(
           pattern,
           wrap.bind(null, handler)
         )
-      }
-
-    Server.post =
-      function() {
-        instance().post.apply(instance(), arguments)
       }
 
     function wrap(handler, request, response) {
@@ -141,6 +115,12 @@ module.exports = library.export(
     Server.prototype.use = function() {
       this.app.use.apply(this.app, arguments)
     }
+
+    library.collectivize(
+      Server,
+      collective,
+      ["express", "start", "relenquishControl", "stop", "get", "post", "use"]
+    )
 
     return Server
   }
