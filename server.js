@@ -2,19 +2,11 @@ var library = require("nrtv-library")(require)
 
 module.exports = library.export(
   "nrtv-server",
-  ["http", "body-parser", library.collective({})],
+  [library.collective({}), "http", "body-parser", "cookie-parser"],
 
-  function(http, bodyParser, collective) {
+  function(collective, http, bodyParser, cookieParser) {
 
     var express = require("express")
-
-    function instance() {
-      if (!collective.instance) {
-        collective.instance = new Server()
-      }
-
-      return collective.instance
-    }
 
     function Server() {
       var _this = this
@@ -22,6 +14,7 @@ module.exports = library.export(
       this.app = express()
 
       this.app.use(bodyParser.json())
+      this.app.use(cookieParser())
     }
 
     Server.prototype.express =
