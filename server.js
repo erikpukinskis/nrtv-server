@@ -83,9 +83,20 @@ module.exports = library.export(
         )
       }
 
+    var alreadyNotified = {}
+    function deprecated(verb) {
+      if (alreadyNotified[verb]) { 
+        return
+      } else {
+        alreadyNotified[verb] = true
+      }
+
+      console.log(" ⚡⚡⚡ WARNING ⚡⚡⚡  server."+verb+" is deprecated. Use server.addRoute instead.")
+    }
+
     Server.prototype.get =
       function(pattern, handler) {
-        console.log(" ⚡⚡⚡ WARNING ⚡⚡⚡  server.get is deprecated. Use server.addRoute instead.")
+        deprecated("get")
         this.app.get(
           pattern,
           wrap.bind(null, handler)
