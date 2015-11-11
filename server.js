@@ -83,14 +83,7 @@ module.exports = library.export(
         )
       }
 
-    var alreadyNotified = {}
     function deprecated(verb) {
-      if (alreadyNotified[verb]) { 
-        return
-      } else {
-        alreadyNotified[verb] = true
-      }
-
       console.log(" ⚡⚡⚡ WARNING ⚡⚡⚡  server."+verb+" is deprecated. Use server.addRoute instead.")
     }
 
