@@ -7,7 +7,8 @@ test.using(
 
     var instance = new Server()
 
-    instance.get(
+    instance.addRoute(
+      "get",
       "/",
       function(x, response) {
         response.send("hiya!")
@@ -37,7 +38,8 @@ test.using(
   ["./server", "supertest"],
   function(expect, done, Server, request) {
 
-    Server.get(
+    Server.addRoute(
+      "get",
       "/",
       function(x, response) {
         response.send("pants")

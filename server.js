@@ -75,8 +75,17 @@ module.exports = library.export(
         })
       }
 
+    Server.prototype.addRoute =
+      function(verb, pattern, handler) {
+        this.app[verb](
+          pattern,
+          wrap.bind(null, handler)
+        )
+      }
+
     Server.prototype.get =
       function(pattern, handler) {
+        console.log(" ⚡⚡⚡ WARNING ⚡⚡⚡  server.get is deprecated. Use server.addRoute instead.")
         this.app.get(
           pattern,
           wrap.bind(null, handler)
@@ -85,6 +94,7 @@ module.exports = library.export(
 
     Server.prototype.post =
       function(pattern, handler) {
+        console.log(" ⚡⚡⚡ WARNING ⚡⚡⚡  server.post is deprecated. Use server.addRoute instead.")
         this.app.post(
           pattern,
           wrap.bind(null, handler)
@@ -112,7 +122,7 @@ module.exports = library.export(
     library.collectivize(
       Server,
       collective,
-      ["express", "start", "relenquishControl", "stop", "get", "post", "use"]
+      ["express", "start", "relenquishControl", "stop", "addRoute", "get", "post", "use"]
     )
 
     return Server
