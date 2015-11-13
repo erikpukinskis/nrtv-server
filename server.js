@@ -15,6 +15,7 @@ module.exports = library.export(
 
       this.app.use(bodyParser.json())
       this.app.use(cookieParser())
+      this.stop = stop.bind(this)
     }
 
     Server.prototype.express =
@@ -61,19 +62,18 @@ module.exports = library.export(
         this.startOverride = start
       }
 
-    Server.prototype.stop =
-      function (callback) {
-        var port = this.port
+    function stop(callback) {
+      var port = this.port
 
-        this.server.close(function () {
-          console.log('Server closed!', port, 'should be free.')
-          if (callback) { callback() }
-        })
+      this.server.close(function () {
+        console.log('Server closed!', port, 'should be free.')
+        if (callback) { callback() }
+      })
 
-        this.sockets.forEach(function(socket) {
-          socket.destroy()
-        })
-      }
+      this.sockets.forEach(function(socket) {
+        socket.destroy()
+      })
+    }
 
     Server.prototype.addRoute =
       function(verb, pattern, handler) {
