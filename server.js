@@ -48,6 +48,9 @@ module.exports = library.export(
       })
     }
 
+    Server.prototype.getPort =
+      function() { return this.port }
+
     Server.prototype.ensureStopped =
       function(message)  {
         if (this.port) {
@@ -126,7 +129,7 @@ module.exports = library.export(
     library.collectivize(
       Server,
       collective,
-      ["express", "start", "relenquishControl", "stop", "addRoute", "get", "post", "use"]
+      ["express", "start", "relenquishControl", "stop", "addRoute", "get", "post", "use", "getPort"]
     )
 
     return Server
