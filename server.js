@@ -23,6 +23,11 @@ module.exports = library.export(
         return this.app
       }
 
+    Server.prototype.isStarted =
+      function() {
+        return !!this.port
+      }
+
     Server.prototype.start = function(port) { 
       this.ensureStopped()
       this.sockets = sockets = []
