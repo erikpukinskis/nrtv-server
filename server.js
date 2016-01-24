@@ -134,7 +134,7 @@ module.exports = library.export(
     library.collectivize(
       Server,
       collective,
-      ["express", "start", "relenquishControl", "stop", "addRoute", "get", "post", "use", "getPort"]
+      ["express", "start", "relenquishControl", "stop", "addRoute", "get", "post", "use", "getPort", "isStarted"]
     )
 
     return Server
