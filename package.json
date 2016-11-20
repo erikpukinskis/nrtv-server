@@ -1,11 +1,11 @@
 {
-  "name": "nrtv-server",
+  "name": "web-site",
   "version": "0.26.0",
   "description": "Send stuff over HTTP",
   "main": "server.js",
   "repository": {
     "type": "git",
-    "url": "https://github.com/erikpukinskis/nrtv-server.git"
+    "url": "https://github.com/erikpukinskis/web-site.git"
   },
   "dependencies": {
     "http": "*",
@@ -23,5 +23,5 @@
     "sinon": "*"
   },
   "license": "ISC",
-  "homepage": "https://github.com/erikpukinskis/nrtv-server"
+  "homepage": "https://github.com/erikpukinskis/web-site"
 }

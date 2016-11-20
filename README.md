@@ -1,9 +1,9 @@
 A wrapper for Express that adds the things it boneheadedly leaves out by default:
 
 ```javascript
-var Server = require("nrtv-server")
+var WebSite = require("web-site")
 
-var instance = new Server()
+var instance = new WebSite()
 instance.get("/", function(x,response) {
   response.send("okay")
 })
