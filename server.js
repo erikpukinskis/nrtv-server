@@ -1,7 +1,7 @@
 var library = require("nrtv-library")(require)
 
 module.exports = library.export(
-  "nrtv-server",
+  "web-site",
   [library.collective({}), "http", "body-parser", "cookie-parser"],
 
   function(collective, http, bodyParser, cookieParser) {
