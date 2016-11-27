@@ -25,14 +25,18 @@ In the name of modularity, Express has stopped doing basic HTTP server things by
 
 If you want to tell the web site to use a different http server, you can ask it to relinquish control of starting and stopping:
 
-    var site = new WebSite()
-    site.addRoute(...)
+```javascript
+var site = new WebSite()
+site.addRoute(...)
 
-    site.relinquishControl(function() {
-      var httpServer = ...
+site.relinquishControl(function() {
+  var httpServer = ...
 
-      // we can start this here, or wait, or whatever
+  // we can start this here, or wait, or whatever
 
-      // Then we return the httpServer so the routes can go into that instead:
-      return httpServer
-    }
+  // Then we return the httpServer so the routes can go into that instead:
+  return httpServer
+}
+```
+
+See [get-socket](https://github.com/erikpukinskis/get-socket/blob/master/get-socket.js#L77) for an example.
