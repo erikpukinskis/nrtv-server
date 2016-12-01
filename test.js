@@ -1,6 +1,6 @@
-var test = require("nrtv-test")(require)
+var runTest = require("run-test")(require)
 
-test.using(
+runTest(
   "sending text",
   ["./server", "supertest"],
   function(expect, done, Server, request) {
@@ -33,7 +33,7 @@ test.using(
 )
 
 
-test.using(
+runTest(
   "getting a collective instance",
   ["./server", "supertest"],
   function(expect, done, Server, request) {
@@ -64,7 +64,7 @@ test.using(
 )
 
 
-test.using(
+runTest(
   "you can provide your own server startup function",
 
   ["./server", "http"],
