@@ -2,7 +2,7 @@ var runTest = require("run-test")(require)
 
 runTest(
   "sending text",
-  ["./server", "supertest"],
+  ["./", "supertest"],
   function(expect, done, Server, request) {
 
     var instance = new Server()
@@ -35,7 +35,7 @@ runTest(
 
 runTest(
   "getting a collective instance",
-  ["./server", "supertest"],
+  ["./", "supertest"],
   function(expect, done, Server, request) {
 
     Server.addRoute(
@@ -67,7 +67,7 @@ runTest(
 runTest(
   "you can provide your own server startup function",
 
-  ["./server", "http"],
+  ["./", "http"],
   function(expect, done, Server, http) {
 
     var server = new Server()
