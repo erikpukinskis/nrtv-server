@@ -17,8 +17,9 @@ In the name of modularity, Express has stopped doing basic HTTP server things by
 
 # Features
 
-* Adds bodyParser by default
-* Adds cookieParser by default
+* Parses submitted forms by default
+* Parses JSON forms by default
+* Parses cookies by default
 * site.stop()
 * site.isStarted()
 * site.getPort()

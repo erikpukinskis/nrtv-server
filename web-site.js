@@ -14,6 +14,7 @@ module.exports = library.export(
       this.app = express()
 
       this.app.use(bodyParser.json())
+      this.app.use(bodyParser.urlencoded({ extended: true }))
       this.app.use(cookieParser())
       this.stop = stop.bind(this)
     }
