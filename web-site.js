@@ -1,5 +1,8 @@
 var library = require("module-library")(require)
 
+// Undocumented APIs:
+// site.port = foo
+
 module.exports = library.export(
   "web-site",
   [library.collective({}), "http", "body-parser", "cookie-parser"],
