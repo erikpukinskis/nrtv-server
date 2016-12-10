@@ -32,7 +32,7 @@ module.exports = library.export(
     Server.prototype.start = function(port) { 
       this.ensureStopped()
       this.sockets = sockets = []
-      this.port = port || 5678
+      this.port = port || this.port || process.env.PORT || 5678
 
       if (this.startOverride) {
         this.server = this.startOverride(port)
