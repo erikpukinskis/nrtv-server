@@ -1,8 +1,5 @@
 var library = require("module-library")(require)
 
-// Undocumented APIs:
-// site.port = foo
-
 module.exports = library.export(
   "web-site",
   [library.collective({}), "http", "body-parser", "cookie-parser"],
@@ -22,6 +19,26 @@ module.exports = library.export(
       this.stop = stop.bind(this)
     }
 
+    function mega() {
+      var megaServer = collective.megaServer
+
+      if (!megaServer) {
+        megaServer = collective.megaServer = new Server()
+      }
+
+      return megaServer
+    }
+
+    Server.provision = function() {
+      var newApp = new Server()
+      mega().use(newApp.app)
+      return newApp
+    }
+
+    Server.megaBoot = function(port) {
+      mega().start(port || process.env.PORT || 8183)
+    }
+
     Server.prototype.express =
       function() {
         return this.app
@@ -35,7 +52,7 @@ module.exports = library.export(
     Server.prototype.start = function(port) { 
       this.ensureStopped()
       this.sockets = sockets = []
-      this.port = port || this.port || process.env.PORT || 5678
+      this.port = port || 5678
 
       if (this.startOverride) {
         this.server = this.startOverride(port)
