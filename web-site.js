@@ -29,10 +29,10 @@ module.exports = library.export(
       return megaServer
     }
 
-    Server.provision = function() {
+    Server.provision = function(boot) {
       var newApp = new Server()
       mega().use(newApp.app)
-      return newApp
+      boot(newApp)
     }
 
     Server.megaBoot = function(port) {
