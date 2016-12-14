@@ -104,8 +104,19 @@ module.exports = library.export(
       })
     }
 
+    var ALLOWED_VERBS = "get, post, put, head, delete, options, trace, copy, lock, mkcol, move, purge, propfind, proppatch, unlock, report, mkactivity, checkout, merge, m-search, notify, subscribe, unsubscribe, patch, search, connect".split(", ")
+
+    function verbOk(verb) {
+      var i = ALLOWED_VERBS.indexOf(verb.toLowerCase())
+      return i >= 0
+    }
+
     Server.prototype.addRoute =
       function(verb, pattern, handler) {
+        if (!verbOk(verb)) {
+          throw new Error("webSite.addRoute expects an HTTP verb as the first argument. You passed \""+verb+"\". Valid verbs are "+ALLOWED_VERBS)
+        }
+
         this.app[verb](
           pattern,
           wrap.bind(null, handler)
