@@ -13,7 +13,7 @@ site.stop()
 
 ## Why
 
-In the name of modularity, Express has stopped doing basic HTTP server things by default. I don't want to have to configure an express server every time I want to start it on a port, parse a cookie, parse a JSON body, etc. These things are the most basic, fundamental activities of an HTTP server, it's OK to load them by default.
+In the name of modularity, Express has stopped doing basic web server things by default. I don't want to have to configure an express server every time I want to start it on a port, parse a cookie, parse a JSON body, etc. These things are the most basic, fundamental activities of a web server, it's OK to load them by default.
 
 ## Features
 
