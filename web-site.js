@@ -2,9 +2,9 @@ var library = require("module-library")(require)
 
 module.exports = library.export(
   "web-site",
-  [library.collective({}), "http", "body-parser", "cookie-parser"],
+  [library.collective({}), "http", "body-parser", "cookie-parser", "path"],
 
-  function(collective, http, bodyParser, cookieParser) {
+  function(collective, http, bodyParser, cookieParser, path) {
 
     var express = require("express")
 
@@ -163,10 +163,20 @@ module.exports = library.export(
       this.app.use.apply(this.app, arguments)
     }
 
+    Server.prototype.sendFile = function(pathToFile) {
+
+      return sendFile.bind(null, pathToFile)
+    }
+
+    function sendFile(pathToFile, request, response) {
+      var fullPath = path.join(__dirname, pathToFile)
+      response.sendFile(fullPath)
+    }
+
     library.collectivize(
       Server,
       collective,
-      ["express", "start", "relenquishControl", "stop", "addRoute", "get", "post", "use", "getPort", "isStarted"]
+      ["express", "start", "relenquishControl", "stop", "addRoute", "get", "post", "use", "getPort", "isStarted", "sendFile"]
     )
 
     return Server

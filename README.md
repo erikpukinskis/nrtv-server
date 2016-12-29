@@ -4,7 +4,7 @@
 var WebSite = require("web-site")
 
 var site = new WebSite()
-site.addRoute("get", "/", function(x,response) {
+site.addRoute("get", "/", function(request,response) {
   response.send("okay")
 })
 site.start(4100)
@@ -13,7 +13,7 @@ site.stop()
 
 ## Why
 
-In the name of modularity, Express has stopped doing basic web server things by default. I don't want to have to configure an express server every time I want to start it on a port, parse a cookie, parse a JSON body, etc. These things are the most basic, fundamental activities of a web server, it's OK to load them by default.
+In the name of modularity, Express has stopped doing basic web server things by default. Like stopping. Or parsing form data. Or handling AJAX requests. These things are the most basic, fundamental activities of a web server, it's OK to load them by default.
 
 ## Features
 
@@ -23,6 +23,8 @@ In the name of modularity, Express has stopped doing basic web server things by 
 * site.stop()
 * site.isStarted()
 * site.getPort()
+
+## BYOHS (Bring Your Own HTTP Server)
 
 If you want to tell the web site to use a different http server, you can ask it to relinquish control of starting and stopping:
 
@@ -41,3 +43,14 @@ site.relinquishControl(function() {
 ```
 
 See [get-socket](https://github.com/erikpukinskis/get-socket/blob/master/get-socket.js#L77) for an example.
+
+## sendFile
+
+A method for static files is included just so you don't have to include the path module:
+
+```javascript
+site.addRoute(
+  "/some-script.js",
+  site.sendFile("./path/to/your/jazz.js")
+)
+```
