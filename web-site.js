@@ -169,7 +169,8 @@ module.exports = library.export(
     }
 
     function sendFile(pathToFile, request, response) {
-      var fullPath = path.join(__dirname, pathToFile)
+
+      var fullPath = path.join(__dirname, "../../", pathToFile)
       response.sendFile(fullPath)
     }
 
