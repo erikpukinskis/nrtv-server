@@ -29,7 +29,29 @@ module.exports = library.export(
       return megaServer
     }
 
+    Server.boot = function() {
+
+
+      var app = require(projectPath("/"))
+
+      if (!app) {
+        throw new Error("You tried to run WebSite.boot() but there doesn't seem to be a package.json file with a \"main\": that points to a JavaScript file")
+      }
+
+      if (typeof app != "function") {
+        throw new Error("In order for WebSite.boot() to work, your main javascript file should return a function(site) {...}. Yours returned "+app||JSON.stringify(app))
+      }
+
+      console.log("provisioning "+app.name)
+      Server.provision(app)
+      Server.megaBoot()
+    }
+
     Server.provision = function(boot) {
+      if (typeof boot != "function") {
+        throw new Error("WebSite.provision needs to return a function(site) {...} but you provided "+boot)
+      }
+
       var newApp = new Server()
       mega().use(newApp.app)
       boot(newApp)
@@ -168,10 +190,13 @@ module.exports = library.export(
       return sendFile.bind(null, pathToFile)
     }
 
+    function projectPath(pathToFile) {
+      return path.join(__dirname, "../../", pathToFile)
+    }
+
     function sendFile(pathToFile, request, response) {
 
-      var fullPath = path.join(__dirname, "../../", pathToFile)
-      response.sendFile(fullPath)
+      response.sendFile(projectPath(pathToFile))
     }
 
     library.collectivize(
