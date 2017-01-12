@@ -12,7 +12,8 @@
     "express": "*",
     "body-parser": "*",
     "cookie-parser": "*",
-    "module-library": "*"
+    "module-library": "*",
+    "with-nearby-modules": "*"
   },
   "scripts": {
     "test": "node test.js"

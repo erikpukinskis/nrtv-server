@@ -2,9 +2,9 @@ var library = require("module-library")(require)
 
 module.exports = library.export(
   "web-site",
-  [library.collective({}), "http", "body-parser", "cookie-parser", "path"],
+  [library.collective({}), "with-nearby-modules", "http", "body-parser", "cookie-parser", "path"],
 
-  function(collective, http, bodyParser, cookieParser, path) {
+  function(collective, withNearbyModules, http, bodyParser, cookieParser, path) {
 
     var express = require("express")
 
@@ -38,12 +38,11 @@ module.exports = library.export(
         throw new Error("You tried to run WebSite.boot() but there doesn't seem to be a package.json file with a \"main\": that points to a JavaScript file")
       }
 
-      if (typeof app != "function") {
-        throw new Error("In order for WebSite.boot() to work, your main javascript file should return a function(site) {...}. Yours returned "+app||JSON.stringify(app))
-      }
+      Server.provision(function(site) {
+        withNearbyModules
+        .aModuleAppeared("web-site", function() { return site })
+      })
 
-      console.log("provisioning "+app.name)
-      Server.provision(app)
       Server.megaBoot()
     }
 
