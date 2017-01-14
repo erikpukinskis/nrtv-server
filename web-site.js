@@ -9,14 +9,21 @@ module.exports = library.export(
     var express = require("express")
 
     function Server() {
-      var _this = this
-
       this.app = express()
-
       this.app.use(bodyParser.json())
       this.app.use(bodyParser.urlencoded({ extended: true }))
       this.app.use(cookieParser())
       this.stop = stop.bind(this)
+      this.memories = {}
+      this.__isNrtvWebSite = true
+    }
+
+    Server.prototype.remember = function(key) {
+      return this.memories[key]
+    }
+
+    Server.prototype.see = function(key, object) {
+      this.memories[key] = object
     }
 
     function mega() {
@@ -180,7 +187,10 @@ module.exports = library.export(
 
     Server.prototype.static = express.static;
 
-    Server.prototype.use = function() {
+    Server.prototype.use = function(server) {
+      if (server.__isNrtvWebSite) {
+        server.memories = this.memories
+      }
       this.app.use.apply(this.app, arguments)
     }
 
