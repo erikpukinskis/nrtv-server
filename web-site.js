@@ -89,8 +89,8 @@ module.exports = library.export(
         }
       } else {
         this.server = http.createServer(this.app)
+        console.log('web-site starting on', port)
         this.server.listen(port)
-        console.log('listening on', port)
       }
 
       this.server.on('connection', function(socket) {
