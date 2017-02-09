@@ -194,18 +194,15 @@ module.exports = library.export(
       this.app.use.apply(this.app, arguments)
     }
 
-    Server.prototype.sendFile = function(pathToFile) {
+    Server.prototype.sendFile = function(pathToFolder, pathToFile) {
+      var fullPath = path.join(pathToFolder, pathToFile)
 
-      return sendFile.bind(null, pathToFile)
-    }
-
-    function projectPath(pathToFile) {
-      return path.join(__dirname, "../../", pathToFile)
+      return sendFile.bind(null, fullPath)
     }
 
     function sendFile(pathToFile, request, response) {
 
-      response.sendFile(projectPath(pathToFile))
+      response.sendFile(pathToFile)
     }
 
     library.collectivize(
