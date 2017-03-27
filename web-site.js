@@ -89,8 +89,10 @@ module.exports = library.export(
         }
       } else {
         this.server = http.createServer(this.app)
+
         console.log('web-site starting on', port)
-        this.server.listen(port)
+
+        this.server.listen(port).on("error", errorWithPort.bind(null, port))
       }
 
       this.server.on('connection', function(socket) {
@@ -100,6 +102,11 @@ module.exports = library.export(
           sockets.splice(sockets.indexOf(socket), 1)
         })
       })
+    }
+
+    function errorWithPort(port, error) {
+      error.message += " (port "+port+")"
+      throw error
     }
 
     Server.prototype.getPort =
