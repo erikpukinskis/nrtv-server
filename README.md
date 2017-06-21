@@ -51,6 +51,6 @@ A method for static files is included just so you don't have to include the path
 ```javascript
 site.addRoute(
   "/some-script.js",
-  site.sendFile("./path/to/your/jazz.js")
+  site.sendFile(__dirname, "path/to/your/jazz.js")
 )
 ```
