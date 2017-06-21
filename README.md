@@ -24,7 +24,7 @@ In the name of modularity, Express has stopped doing basic web server things by 
 * site.isStarted()
 * site.getPort()
 
-## BYOHS (Bring Your Own HTTP Server)
+### BYOHS (Bring Your Own HTTP Server)
 
 If you want to tell the web site to use a different http server, you can ask it to relinquish control of starting and stopping:
 
@@ -44,7 +44,7 @@ site.relinquishControl(function() {
 
 See [get-socket](https://github.com/erikpukinskis/get-socket/blob/master/get-socket.js#L77) for an example.
 
-## sendFile
+### sendFile
 
 A method for static files is included just so you don't have to include the path module:
 
@@ -54,3 +54,5 @@ site.addRoute(
   site.sendFile(__dirname, "path/to/your/jazz.js")
 )
 ```
+
+Probably a better idea than opening up a whole static folder that could be full of anything.
