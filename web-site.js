@@ -8,8 +8,8 @@ module.exports = library.export(
 
     var express = require("express")
 
-    function Server() {
-      this.app = express()
+    function Server(app) {
+      this.app = app || express()
       this.app.use(bodyParser.json())
       this.app.use(bodyParser.urlencoded({ extended: true }))
       this.app.use(cookieParser())
