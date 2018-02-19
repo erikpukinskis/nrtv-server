@@ -13,7 +13,8 @@
     "body-parser": "*",
     "cookie-parser": "*",
     "module-library": "*",
-    "with-nearby-modules": "*"
+    "with-nearby-modules": "*",
+    "compression": "*"
   },
   "scripts": {
     "test": "node test.js"

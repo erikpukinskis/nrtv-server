@@ -2,14 +2,15 @@ var library = require("module-library")(require)
 
 module.exports = library.export(
   "web-site",
-  [library.collective({}), "with-nearby-modules", "http", "body-parser", "cookie-parser", "path"],
+  [library.collective({}), "with-nearby-modules", "http", "body-parser", "cookie-parser", "path", "compression"],
 
-  function(collective, withNearbyModules, http, bodyParser, cookieParser, path) {
+  function(collective, withNearbyModules, http, bodyParser, cookieParser, path, compression) {
 
     var express = require("express")
 
     function Server(app) {
       this.app = app || express()
+      this.app.use(compression())
       this.app.use(bodyParser.json())
       this.app.use(bodyParser.urlencoded({ extended: true }))
       this.app.use(cookieParser())
