@@ -2,9 +2,9 @@ var library = require("module-library")(require)
 
 module.exports = library.export(
   "web-site",
-  [library.collective({}), "with-nearby-modules", "http", "body-parser", "cookie-parser", "path", "compression"],
+  ["with-nearby-modules", "http", "body-parser", "cookie-parser", "path", "compression"],
 
-  function(collective, withNearbyModules, http, bodyParser, cookieParser, path, compression) {
+  function(withNearbyModules, http, bodyParser, cookieParser, path, compression) {
 
     var express = require("express")
 
@@ -27,11 +27,11 @@ module.exports = library.export(
       this.memories[key] = object
     }
 
-    function mega() {
-      var megaServer = collective.megaServer
+    var megaServer
 
+    function mega() {
       if (!megaServer) {
-        megaServer = collective.megaServer = new Server()
+        megaServer = new Server()
       }
 
       return megaServer
@@ -212,12 +212,6 @@ module.exports = library.export(
 
       response.sendFile(pathToFile)
     }
-
-    library.collectivize(
-      Server,
-      collective,
-      ["express", "start", "relenquishControl", "stop", "addRoute", "get", "post", "use", "getPort", "isStarted", "sendFile"]
-    )
 
     return Server
   }

@@ -34,37 +34,6 @@ runTest(
 
 
 runTest(
-  "getting a collective instance",
-  ["./", "supertest"],
-  function(expect, done, Server, request) {
-
-    Server.addRoute(
-      "get",
-      "/",
-      function(x, response) {
-        response.send("pants")
-      }
-    )
-
-    Server.start(4000)
-
-    request(
-      "http://localhost:4000"
-    )
-    .get("/")
-    .end(function(x, response) {
-      expect(response.text).to.match(
-        /pants/
-      )
-      Server.stop()
-      done()
-    })
-
-  }
-)
-
-
-runTest(
   "you can provide your own server startup function",
 
   ["./", "http"],
