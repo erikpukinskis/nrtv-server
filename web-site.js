@@ -27,47 +27,6 @@ module.exports = library.export(
       this.memories[key] = object
     }
 
-    var megaServer
-
-    function mega() {
-      if (!megaServer) {
-        megaServer = new Server()
-      }
-
-      return megaServer
-    }
-
-    Server.boot = function() {
-
-
-      var app = require(projectPath("/"))
-
-      if (!app) {
-        throw new Error("You tried to run WebSite.boot() but there doesn't seem to be a package.json file with a \"main\": that points to a JavaScript file")
-      }
-
-      Server.provision(function(site) {
-        withNearbyModules
-        .aModuleAppeared("web-site", function() { return site })
-      })
-
-      Server.megaBoot()
-    }
-
-    Server.provision = function(boot) {
-      if (typeof boot != "function") {
-        throw new Error("WebSite.provision needs to return a function(site) {...} but you provided "+boot)
-      }
-
-      var newApp = new Server()
-      mega().use(newApp.app)
-      boot(newApp)
-    }
-
-    Server.megaBoot = function(port) {
-      mega().start(port || process.env.PORT || 8183)
-    }
-
     Server.prototype.express =
       function() {
         return this.app
@@ -85,21 +44,28 @@ module.exports = library.export(
 
       if (this.startOverride) {
         this.server = this.startOverride(port)
+
         if (!this.server) {
           throw new Error("The start function you gave us needs to return an http server so we can monitor the sockets and stuff! The function you gave us looks like this:\n"+this.startOverride.toString()+"\n")
         }
-        if (this.startOverride.name) {
-          var overrideName = "the "+this.startOverride.name+" function"
-        } else {
-          var overrideName = "an unnamed override function"
-        }
-        console.log("web-site ostensibly started by "+overrideName+" on", port)
+
+        console.log(startStatus(this, port))
+
       } else {
-        this.server = http.createServer(this.app)
+        this.server = http.createServer(
+          this.app)
 
-        console.log('web-site starting on', port)
+        this.server.listen(
+          port)
+        .on(
+          "error",
+          errorWithPort.bind(
+            null,
+            port))
 
-        this.server.listen(port).on("error", errorWithPort.bind(null, port))
+        console.log(
+          "web-site starting on",
+          port)
       }
 
       this.server.on('connection', function(socket) {
@@ -110,6 +76,21 @@ module.exports = library.export(
         })
       })
     }
+
+    function startStatus(site, port) {
+      if (site.startOverride.name) {
+        var overrideName = "the "+site.startOverride.name+" function"
+      } else {
+        var overrideName = "an unnamed override function"
+      } 
+
+      if (port) {
+        return "web-site ostensibly started by "+overrideName+" on "+port
+      } else {
+        return "web-site ostensibly started by "+overrideName+" without a port"
+      }
+    }
+
 
     function errorWithPort(port, error) {
       error.message += " (port "+port+")"
@@ -166,26 +147,17 @@ module.exports = library.export(
       }
 
     function deprecated(verb) {
-      console.log(" ⚡⚡⚡ WARNING ⚡⚡⚡  server."+verb+" is deprecated. Use server.addRoute instead.")
+
     }
 
     Server.prototype.get =
       function(pattern, handler) {
-        deprecated("get")
-        this.app.get(
-          pattern,
-          wrap.bind(null, handler)
-        )
-      }
+      throw new Error("site.get is no longer supported. Use site.addRoute(\"get\", \"/route-to\", function handler(request, response) { ... }) instead.")}
+
 
     Server.prototype.post =
       function(pattern, handler) {
-        console.log(" ⚡⚡⚡ WARNING ⚡⚡⚡  server.post is deprecated. Use server.addRoute instead.")
-        this.app.post(
-          pattern,
-          wrap.bind(null, handler)
-        )
-      }
+      throw new Error("site.post is no longer supported. Use site.addRoute(\"post\", \"/resource\", function handler(request, response) { ... }) instead.")}
 
     function wrap(handler, request, response) {
       try {
