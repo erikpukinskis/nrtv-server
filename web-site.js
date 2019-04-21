@@ -88,6 +88,12 @@ module.exports = library.export(
         if (!this.server) {
           throw new Error("The start function you gave us needs to return an http server so we can monitor the sockets and stuff! The function you gave us looks like this:\n"+this.startOverride.toString()+"\n")
         }
+        if (this.startOverride.name) {
+          var overrideName = "the "+this.startOverride.name+" function"
+        } else {
+          var overrideName = "an unnamed override function"
+        }
+        console.log("web-site ostensibly started by "+overrideName+" on", port)
       } else {
         this.server = http.createServer(this.app)
 
