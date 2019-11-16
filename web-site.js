@@ -19,48 +19,9 @@ module.exports = library.export(
       this.__isNrtvWebSite = true
     }
 
-
-    // Hot reload
-
-    var stopCallbacksByPath = {}
-
-    Server.prototype.boot = function(dirname, pathToFile) {
-
-      var filename = path.join(dirname, pathToFile)
-
-      var stop = stopCallbacksByPath[filename]
-
-      if (stop) {
-        var thenBoot = Server.prototype.boot.bind(site, dirname, pathToFile)
-        stop(thenBoot)
-        return }
-
-      var singleton = require(filename)
-
-      if (typeof singleton != "function") {
-        throw new Error("For the", pathToFile, "site to boot an npm module, it needs to export a function. You exported ",singleton)
-      }
-      console.log("about to apply args", args, "to singleton from", filename)
-
-      var siteContext = {
-        routes: []
-      }
-
-      var stop = singleton.apply(null, addRoute.bind(, )
-
-
-      if (typeof stop != "function") {
-        throw new Error("When you boot a site, it needs to return a stop function. The function exported in", pathToFile, "returned", singleton)
-      }
-      stopCallbacksByPath[pathToFile] = stop
-    }
-
     Server.prototype.remember = function(key) {
       return this.memories[key]
     }
-
-    /////////////
-
 
     Server.prototype.see = function(key, object) {
       this.memories[key] = object
