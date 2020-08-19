@@ -1,6 +1,6 @@
 {
   "name": "web-site",
-  "version": "0.50.0",
+  "version": "0.51.0",
   "description": "Send stuff over HTTP",
   "main": "web-site.js",
   "repository": {
