@@ -180,8 +180,8 @@ module.exports = library.export(
       this.app.use.apply(this.app, arguments)
     }
 
-    Server.prototype.sendFile = function(pathToFolder, pathToFile) {
-      var fullPath = path.join(pathToFolder, pathToFile)
+    Server.prototype.sendFile = function() {
+      var fullPath = path.join.apply(null, arguments)
 
       return sendFile.bind(null, fullPath)
     }
